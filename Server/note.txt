@@ -1,0 +1,63 @@
+app.post('/register', async (req, res) => { ... })
+app.post(): Ye function HTTP POST request ko handle karta hai. Jab client /register route par data bhejega, tab ye function chalega.
+async (req, res): Ye ek asynchronous function hai jo await keyword ka use karke promises ko handle karega.
+
+2. let { username, password } = req.body;
+Yahan pe req.body ka use ho raha hai. Isme user jo bhi data POST request ke zariye bhej raha hai (jaise username aur password), usko destructure karke username aur password variables me assign kar rahe ho.
+For example, agar request body kuch aisa hai:
+json
+Copy code
+{ "username": "ankit", "password": "mypassword" }
+Toh ab username = "ankit" aur password = "mypassword" ho jayega.
+
+3. console.log(req.body);
+Ye sirf debugging ke liye hai. Server par request body (user ka data) ko console par print karega, taki pata chale ki client kya data bhej raha hai.
+
+4. let user = new User({ username, password });
+User: Ye ek MongoDB model hai jo schema ke according user data ko database me save karega.
+new User({...}): Ek naya User object create ho raha hai, jisme username aur password set ho rahe hain.
+
+5. await user.save();
+user.save(): Ye function MongoDB me nayi entry banane ke liye hai.
+await: Asynchronous operation ka wait karta hai jab tak data MongoDB me save nahi ho jata.
+
+6. res.status(201).json({ message: "Registration Successful" });
+Agar sab kuch sahi raha (no errors), toh HTTP status code 201 (Created) ke sath ek success message client ko bheja jayega:
+json
+Copy code
+{ "message": "Registration Successful" }
+
+7. catch (error) { ... }
+Agar koi error aati hai (e.g., MongoDB down ya invalid data), toh catch block chalega.
+res.status(500).json({ error: "Registration Failed" });
+Client ko HTTP status code 500 (Server Error) ke sath ek error message bheja jayega.
+
+1.
+Samajhne ke liye Example Flow:
+Client /register par POST request bhejta hai:
+json
+Copy code
+{ "username": "ankit", "password": "mypassword" }
+
+2.
+Server:
+username aur password ko req.body se leta hai.
+Ek naya user MongoDB me save karta hai (user.save()).
+Agar save ho gaya, toh success response bhejta hai:
+json
+Copy code
+{ "message": "Registration Successful" }
+
+3. 
+Agar error aata hai (e.g., duplicate username), toh server error response deta hai:
+
+json
+Copy code
+{ "error": "Registration Failed" }
+Kuch aur part clear nahi ho toh pucho! 😊
+
+
+
+
+
+

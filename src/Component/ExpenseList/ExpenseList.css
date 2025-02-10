@@ -1,0 +1,30 @@
+
+html,body{
+    height: 100%;
+    width: 100%;
+    /* background-color: aquamarine; */
+}
+.main{
+    width: 85vw;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+h2{
+    margin-top: 5px;
+    color: green;
+    margin-bottom: 10px;
+}
+h3{
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+h5{
+    margin-bottom: 11px;
+
+}
+span{
+    font-size: 14px;
+    font-weight: 200;
+}
